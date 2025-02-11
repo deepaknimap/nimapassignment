@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #34495e;
+        }
+
+        #form {
+            margin: auto;
+            width: 30%;
+            border: 1px solid rgba(0, 0, 0, 0.39);
+            border-color: white;
+            color: white;
+        }
+
+        .calculator {
+            padding-top: 1rem;
+        }
+
+        .input {
+            display: flex;
+            justify-content: center;
+        }
+
+        .input input {
+            width: 80%;
+            padding: 1rem;
+            border-radius: 0.4rem;
+            border: 1px solid rgba(0, 0, 0, 0.39);
+            outline: none;
+        }
+
+        .below {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .keys {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .keys span {
+            background-color: rgb(73, 73, 190);
+            box-shadow: 2px 0px 8px 1px rgba(0, 0, 0, 0.39);
+            -webkit-box-shadow: 2px 0px 8px 1px rgba(0, 0, 0, 0.39);
+            -moz-box-shadow: 2px 0px 8px 1px rgba(0, 0, 0, 0.39);
+            padding: 1rem;
+            border-radius: 0.2rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .keys span:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form">
+        <div class="calculator">
+            <div class="input">
+                <input type="text" id="input" />
+            </div>
+            <div class="below">
+                <div class="keys">
+                    <span value="(">(</span>
+                    <span value=")">)</span>
+                    <span value="%">%</span>
+                    <span value="clear">AC</span>
+                </div>
+                <div class="keys">
+                    <span value="7">7</span>
+                    <span value="8">8</span>
+                    <span value="9">9</span>
+                    <span value="/">/</span>
+                </div>
+                <div class="keys">
+                    <span value="4">4</span>
+                    <span value="5">5</span>
+                    <span value="6">6</span>
+                    <span value="*">*</span>
+                </div>
+                <div class="keys">
+                    <span value="1">1</span>
+                    <span value="2">2</span>
+                    <span value="3">3</span>
+                    <span value="-">-</span>
+                </div>
+                <div class="keys">
+                    <span value="0">0</span>
+                    <span value=".">.</span>
+                    <span value="=">=</span>
+                    <span value="+">+</span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="./script.js"></script>
+</body>
+
+</html>
