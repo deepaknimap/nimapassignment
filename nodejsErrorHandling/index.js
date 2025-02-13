@@ -1,4 +1,4 @@
-import { indexRoute } from "./controller/index.js";
+import { indexRoute } from "./controller/index.jsc";
 import express from 'express';
 const app = express();
 
