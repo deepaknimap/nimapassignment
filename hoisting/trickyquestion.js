@@ -1,4 +1,4 @@
-//hoisting trickyquestion 
+// hoisting trickyquestion 
 // console.log(y);
 // y = 20;
 
@@ -12,7 +12,6 @@
 // console.log(x);
 // let x= 1;
 
-// var x = 1;
 // let x;
 // console.log(x);
 
