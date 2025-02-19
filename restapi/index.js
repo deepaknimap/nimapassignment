@@ -45,6 +45,30 @@ app.get('/student', (req, res) => {
     catch (err) {
         console.log(err.message)
     }
+});
+
+
+app.get('/student/:roll_no', (req, res) => {
+    try {
+        const { roll_no } = req.params;
+        const query = `select * from  student where roll_no = ?`;
+
+        connection.query(query, [roll_no], (err, result) => {
+            if (err) {
+                return res.status(502).json({
+                    message: err.message,
+                    success: false
+                })
+            }
+
+            return res.status(200).json({
+                success: true,
+                result : result[0]
+            })
+        })
+    } catch (error) {
+        console.log(error.message);
+    }
 })
 
 
@@ -52,6 +76,7 @@ app.post('/student', (req, res) => {
     try {
         const { name, roll_no, marks, city } = req.body;
         const query = `insert into student(roll_no , name , city , marks) values(?,?,?,?)`;
+
 
         connection.query(query, [roll_no, name, city, marks], (err, result) => {
             if (err) {
@@ -76,16 +101,63 @@ app.post('/student', (req, res) => {
 app.put('/student/:roll_no', (req, res) => {
     try {
         const { roll_no } = req.params;
-        let { city , name , mark } = req.body;
+        let { city, name, mark } = req.body;
         const query = `update student  set name = ? , city = ? , marks = ? where roll_no = ? `;
 
-        connection.query(query, [name , city , mark , roll_no], (err, result) => {
+        connection.query(query, [name, city, mark, roll_no], (err, result) => {
             if (err) {
                 return console.log(err.message)
             }
 
             return res.status(200).json({
                 message: "student updated successfully",
+                success: true
+            })
+        })
+    }
+    catch (err) {
+        console.log(err.message)
+    }
+});
+
+
+
+app.delete('/student/:roll_no', (req, res) => {
+    try {
+        const { roll_no } = req.params;
+        const query = `delete from  student where roll_no= ?`;
+        connection.query(query, [roll_no], (err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    message: err.message,
+                    success: false
+                })
+            }
+
+            return res.status(200).json({
+                message: "student has been deleted successfully",
+                success: true
+            });
+        })
+    }
+    catch (err) {
+        console.log(err.message)
+    }
+});
+
+
+app.delete('/student', (req, res) => {
+    try {
+        const query = `delete from student`;
+
+        connection.query(query, (err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    message: err.message
+                });
+            }
+            return res.status(200).json({
+                message: 'all records has been deleted successfully',
                 success: true
             })
         })
