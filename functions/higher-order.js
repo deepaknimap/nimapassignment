@@ -1,14 +1,13 @@
-function fun() {
-    console.log('hello , world');
+function greeting(message, cb) {
+    return cb(message)
 }
 
-function fun2(action) {
-    return action;
-}
+const sayhello = function(message){
+    return (name)=>{
+        console.log(`${message} ${name}`)
+    }
+};
 
-const action = fun2(fun);
-
-action();
-action();
-action();
-action();
+let greet = greeting("hello good morning", sayhello);
+greet('deepak');
+greet('rahul');
