@@ -25,19 +25,20 @@
 
     const upload = multer({
     storage,
-    limits: { fileSize: 1 * 1024 * 1024 },
-    fileFilter: (req, file, cb) => {
-        const allowedType = ["image/png" ,"image/jpg" , "image/jpeg" ]
-        if (allowedType.includes(file.mimetype)) {
-        return cb(null, true);
-        } else {
-        return cb(new Error("file type should be png , jpg , jpeg"));
-        }
-    },
+    // limits: { fileSize: 1 * 1024 * 1024 },
+    // fileFilter: (req, file, cb) => {
+    //     const allowedType = ["image/png" ,"image/jpg" , "image/jpeg" ]
+    //     if (allowedType.includes(file.mimetype)) {
+    //     return cb(null, true);
+    //     } else {
+    //     return cb(new Error("file type should be png , jpg , jpeg"));
+    //     }
+    // },
     }).fields([
         { name: "image", maxCount: 1 },
         { name: "music", maxCount: 1 },
         { name: "other", maxCount: 1 },
+        {name : 'video' , maxCount : 1}
     ]);
 
     app.get("/", (req, res) => {
