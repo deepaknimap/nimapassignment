@@ -60,10 +60,7 @@ app.post('/uploads'  ,  (req , res)=>{
                 return res.status(400).json({ msg: err.message });
             }
             res.status(201).json({msg : 'file success fully uploaded'})
-        });
-
-       
-        
+        });               
     } catch (error) {
         //   res.status(401).json({msg : error.message});
     }
