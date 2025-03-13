@@ -1,50 +1,49 @@
 const jwt = require("jsonwebtoken");
-// const { checkRefreshToken } = require("../validation/refreshtoken");
-
-module.exports.checkValidUser = (req, res, next) => {
+module.exports.userAuthentication = async(req, res, next) => {
   try {
-    let { access_token } = req.cookies;
-    console.log(access_token);
+    let { access_token, refresh_token } = req.cookies;
     if (!access_token) {
-      if (checkRefreshToken(req, res)) {
-        next();
-      } else {
-        return res.status(401).json({
-          messsage: "invalid user",
-        });
+      if (!refresh_token) {
+        return res.send(
+          "please login first then try to get protected data there are not access or refresh token both are expire"
+        );
       }
-    } else {
-      let data = jwt.verify(access_token, "access-token-secret");
-      req.body = data;
-      next();
+    let flag  =  verifyRefreshToken(req, res , refresh_token);
+    console.log(flag);
+    if(flag){
+         return  res.status(201).json({msg : "now you can access data make new req"})
     }
-  } catch (err) {
-    console.log(err.message);
+    else{
+      return  res.status(401).json({msg : "login first then do you facing something worng try to login"})
+    }
+    }
+    let data = jwt.verify(`${access_token}`, process.env.access_token_secret);
+    req.body = data;
+    next();
+  } catch (error) {
+    res.send("please enter valid token");
   }
 };
 
-const checkRefreshToken = (req, res) => {
-  let { refresh_token } = req.cookies;
-  if (!refresh_token) {
-    return false;
-  } else {
-    let data = jwt.verify(refresh_token, "refresh-token-secret");
-    if (!data) {
-      return false;
-    }
+const verifyRefreshToken =  (req, res, token) => {
+  try {
+     jwt.verify(token, process.env.refresh_token_secret);
 
-    let accessToken = jwt.sign({ email : data.email }, "access-token-secret", {
+    let accessToken = jwt.sign({ email : "dipak@gmail.com" }, process.env.access_token_secret, {
       expiresIn: "1m",
     });
 
-    const accessTokenOptions = {
-      httpOnly: true, // Prevents client-side access (XSS protection)
-      secure: false, // Required for HTTPS (remove if using localhost)
-      sameSite: "Strict", // Helps prevent CSRF attacks
-      maxAge: 60 * 1000, // 1 minute
-    };
 
-    res.cookie("access_token", accessToken, accessTokenOptions);
+    const accessTokenOptions = {
+      httpOnly: true,
+      secure: false,
+      sameSite: "Strict",
+      maxAge: 1 * 60 * 1000,
+    };
+    
+    res.cookie('access_token' , accessToken , accessTokenOptions );
     return true;
+  } catch (error) {
+    return false;
   }
 };

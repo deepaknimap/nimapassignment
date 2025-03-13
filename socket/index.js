@@ -10,6 +10,7 @@ const messageRouter = require('./router/message');
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const {addUser , removeUser , findUsers} = require('./utils/socket');
+
 mongoose.connect('mongodb://127.0.0.1:27017/socket')
 .then(()=>{
   console.log('database is connected')
@@ -24,10 +25,6 @@ io = new Server(server, {
   },
 });
 
-
-let user = [];
-
-console.log(findUsers)
 
 
 io.on("connection", (socket) => {

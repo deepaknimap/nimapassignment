@@ -1,4 +1,4 @@
-
+let user = [];
 module.exports.addUser = (userId, socketId) => {
   if (!user.some((data) => data.userId === userId) && userId) {
     let data = { userId, socketId };
@@ -15,8 +15,5 @@ module.exports.removeUser = (socketId) => {
 };
 
 module.exports.findUsers = (userId) => {
-  console.log('findUser triggered');
-  console.log(user);
-  console.log(userId);
   return user.find((data) => data.userId === userId);
 };
