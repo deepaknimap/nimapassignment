@@ -8,8 +8,7 @@ const employeeRouter = require('./router/employee');
 
 connectDB();
 
-employee.sync({alter : false})
-
+employee.sync({alter : false});
 
 app.use(express.json());
 app.use('/api/employee' , employeeRouter);

@@ -17,25 +17,25 @@ const Message = () => {
   const [input, setInput] = useState("");
 
   const socket = useRef(null);
+  const messagesEndRef = useRef(null); // Ref for scrolling
 
   useEffect(() => {
     socket.current = io(socketUrl);
     socket.current.emit("greeting", { id: userId });
-  
+
     socket.current.on("greeting", (message) => {
       console.log(message);
     });
-  
+
     socket.current.on("message", (data) => {
       console.log("New message received:", data);
-      setMessages((prevMessages) => [...prevMessages, data]); // Fix here
+      setMessages((prevMessages) => [...prevMessages, data]);
     });
-  
+
     return () => {
       socket.current.disconnect();
     };
-  }, [userId]); 
-  
+  }, [userId]);
 
   useEffect(() => {
     async function fetchConversations() {
@@ -70,7 +70,9 @@ const Message = () => {
           text: input,
           conversationId: selectedConversation._id,
           userId,
-          friendId: "67cfc7e75f0f444cf028f421",
+          friendId: selectedConversation.members.find(
+            (member) => member._id !== userId
+          )?._id,
         };
 
         let response = await axios.post(`${msgUrl}`, newMessage);
@@ -85,6 +87,16 @@ const Message = () => {
       }
     }
   };
+
+  // Function to scroll to the bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Scroll when messages update
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="chat-app">
@@ -131,6 +143,8 @@ const Message = () => {
                   {msg.text}
                 </div>
               ))}
+              {/* Invisible div to track scrolling */}
+              <div ref={messagesEndRef}></div>
             </div>
             <div className="input-box">
               <input
