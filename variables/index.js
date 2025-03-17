@@ -44,7 +44,7 @@ function varExample() {
   varExample();
 
   
-  function letExample() {
+function letExample() {
     let x = 10;
     if (true) {
       let x = 20; // Block-scoped variable
@@ -52,5 +52,6 @@ function varExample() {
     }
     console.log("Outside block:", x); // Output: 10
   }
-  letExample();
+
+letExample();
   

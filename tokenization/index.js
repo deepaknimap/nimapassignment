@@ -17,4 +17,4 @@ app.use('/api/user' , userRouter)
 
 app.listen(8000 , ()=>{
   console.log('app is running on 8000 porthttp://localhost:8000/')
-})
+});
